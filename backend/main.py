@@ -23,6 +23,9 @@ app.add_middleware(
 class PostBase(BaseModel):
     slug: str
     title: str
+    author: str
+    date: str
+    category: str
 
 class PostFull(PostBase):
     content: str
@@ -32,17 +35,26 @@ fake_posts_db: List[PostFull] = [
     PostFull(
         slug="first-post",
         title="Мой первый пост",
-        content="Это содержимое моего первого поста. Здесь много интересного текста о веб-разработке!"
+        author="Иван Иванов",
+        date="2024-06-01",
+        category="Разработка",
+        content="# Привет, мир!\n\nЭто **содержимое** моего первого поста. Здесь много интересного текста о веб-разработке!\n\n- Пункт 1\n- Пункт 2\n\n[FastAPI](https://fastapi.tiangolo.com/) — современный Python-фреймворк."
     ),
     PostFull(
         slug="fastapi-and-nextjs",
         title="FastAPI + Next.js = ❤️",
-        content="Сочетание FastAPI для бэкенда и Next.js для фронтенда - это мощный и современный стек. Асинхронность FastAPI и рендеринг Next.js творят чудеса."
+        author="Анна Петрова",
+        date="2024-06-02",
+        category="Фреймворки",
+        content="## Почему это круто?\n\nСочетание **FastAPI** для бэкенда и _Next.js_ для фронтенда — это мощный и современный стек.\n\n- Асинхронность FastAPI\n- SSR и SSG в Next.js\n\n> Вместе они творят чудеса!"
     ),
     PostFull(
         slug="why-i-love-python",
         title="Почему я люблю Python",
-        content="Python - это язык с простым синтаксисом и огромной экосистемой. Он отлично подходит для бэкенда, анализа данных и многого другого."
+        author="Павел Смирнов",
+        date="2024-06-03",
+        category="Языки программирования",
+        content="Python — это язык с простым синтаксисом и огромной экосистемой.\n\n- Отлично подходит для бэкенда\n- Анализа данных\n- Многого другого!\n\n```python\nprint('Hello, Python!')\n```"
     )
 ]
 

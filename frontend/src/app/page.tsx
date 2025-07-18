@@ -7,6 +7,9 @@ import Link from 'next/link';
 interface Post {
   slug: string;
   title: string;
+  author: string;
+  date: string;
+  category: string;
 }
 
 // Make sure this URL matches your backend API route and the backend server is running
@@ -39,17 +42,31 @@ export default function Home() {
         {loading ? (
           <p>Загрузка постов...</p>
         ) : (
-          <div className="space-y-4">
-            {posts.map((post) => (
-              <Link
-                key={post.slug}
-                href={`/posts/${post.slug}`}
-                className="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow"
-              >
-                <h2 className="text-2xl font-semibold text-blue-600">
-                  {post.title}
-                </h2>
-              </Link>
+          <div className="space-y-8">
+            {Object.entries(
+              posts.reduce((acc, post) => {
+                if (!acc[post.category]) acc[post.category] = [];
+                acc[post.category].push(post);
+                return acc;
+              }, {} as Record<string, Post[]>)
+            ).map(([category, catPosts]) => (
+              <div key={category}>
+                <h2 className="text-xl font-bold text-gray-700 mb-2">{category}</h2>
+                <div className="space-y-4">
+                  {catPosts.map((post) => (
+                    <Link
+                      key={post.slug}
+                      href={`/posts/${post.slug}`}
+                      className="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow"
+                    >
+                      <h3 className="text-2xl font-semibold text-blue-600">{post.title}</h3>
+                      <div className="text-sm text-gray-500 mt-1">
+                        Автор: {post.author} | Дата: {post.date}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         )}

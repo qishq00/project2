@@ -5,11 +5,15 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import ReactMarkdown from 'react-markdown';
 
 interface Post {
   slug: string;
   title: string;
   content: string;
+  author: string;
+  date: string;
+  category: string;
 }
 
 const API_URL = 'http://localhost:8000/api/posts';
@@ -48,11 +52,13 @@ export default function PostPage() {
   return (
     <article className="max-w-3xl mx-auto p-8">
         <Link href="/" className="text-blue-500 hover:underline mb-8 block">&larr; Назад ко всем постам</Link>
-        <h1 className="text-4xl font-extrabold text-gray-900 mb-4">{post.title}</h1>
-        <div
-            className="prose lg:prose-xl text-gray-700"
-            dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
-        />
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">{post.title}</h1>
+        <div className="text-sm text-gray-500 mb-4">
+          Автор: {post.author} | Дата: {post.date} | Категория: {post.category}
+        </div>
+        <div className="prose lg:prose-xl text-gray-700">
+          <ReactMarkdown>{post.content}</ReactMarkdown>
+        </div>
     </article>
   );
 }
